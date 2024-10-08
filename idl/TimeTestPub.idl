@@ -1,0 +1,5 @@
+struct TimeTestPub
+{
+    uint64 timestamp;
+    string message;
+};
