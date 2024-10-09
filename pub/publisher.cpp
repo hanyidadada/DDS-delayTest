@@ -64,16 +64,18 @@ int main(int argc, char* argv[])
 
     // 设置QoS以降低时延
     DataWriterQos writer_qos;
-    writer_qos.history().kind = KEEP_LAST_HISTORY_QOS;
+    // writer_qos.history().kind = KEEP_LAST_HISTORY_QOS;
     // writer_qos.history().depth = 1;
-    writer_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
-    writer_qos.durability().kind = VOLATILE_DURABILITY_QOS;
+    // writer_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
+    writer_qos.reliability().kind = RELIABLE_RELIABILITY_QOS;
+    // writer_qos.durability().kind = VOLATILE_DURABILITY_QOS;
 
     DataReaderQos reader_qos;
-    reader_qos.history().kind = KEEP_LAST_HISTORY_QOS;
+    // reader_qos.history().kind = KEEP_LAST_HISTORY_QOS;
     // reader_qos.history().depth = 1;
-    reader_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
-    reader_qos.durability().kind = VOLATILE_DURABILITY_QOS;
+    // reader_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
+    reader_qos.reliability().kind = RELIABLE_RELIABILITY_QOS;
+    // reader_qos.durability().kind = VOLATILE_DURABILITY_QOS;
 
     // 创建DataWriter和DataReader
     DataWriter* writer = publisher->create_datawriter(pub_topic, writer_qos);
@@ -81,16 +83,7 @@ int main(int argc, char* argv[])
 
     // 等待订阅者匹配
     std::cout << "Waiting for subscriber..." << std::endl;
-    // PublicationMatchedStatus pub_status;
-    // while (writer->get_publication_matched_status(pub_status) == ReturnCode_t::RETCODE_OK)
-    // {
-    //     std::cout << "Current matched subscribers: " << pub_status.current_count << std::endl;
-    //     if (pub_status.current_count > 0)
-    //     {
-    //         break;
-    //     }
-    //     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    // }
+
     PublicationMatchedStatus pub_status;
     // SubscriptionMatchedStatus sub_status;
     while (writer->get_publication_matched_status(pub_status) == ReturnCode_t::RETCODE_OK &&

@@ -39,16 +39,18 @@ int main()
 
     // 设置QoS以降低时延
     DataWriterQos writer_qos;
-    writer_qos.history().kind = KEEP_LAST_HISTORY_QOS;
-    writer_qos.history().depth = 1;
-    writer_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
-    writer_qos.durability().kind = VOLATILE_DURABILITY_QOS;
+    // writer_qos.history().kind = KEEP_LAST_HISTORY_QOS;
+    // writer_qos.history().depth = 1;
+    // writer_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
+    writer_qos.reliability().kind = RELIABLE_RELIABILITY_QOS;
+    // writer_qos.durability().kind = VOLATILE_DURABILITY_QOS;
 
     DataReaderQos reader_qos = subscriber->get_default_datareader_qos();
-    reader_qos.history().kind = KEEP_LAST_HISTORY_QOS;
-    reader_qos.history().depth = 1;
-    reader_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
-    reader_qos.durability().kind = VOLATILE_DURABILITY_QOS;
+    // reader_qos.history().kind = KEEP_LAST_HISTORY_QOS;
+    // reader_qos.history().depth = 1;
+    // reader_qos.reliability().kind = BEST_EFFORT_RELIABILITY_QOS;
+    reader_qos.reliability().kind = RELIABLE_RELIABILITY_QOS;
+    // reader_qos.durability().kind = VOLATILE_DURABILITY_QOS;
 
     // 创建DataWriter和DataReader
     DataWriter* writer = publisher->create_datawriter(sub_topic, writer_qos);
@@ -66,7 +68,7 @@ int main()
     TimeTestPub pub_data;
     TimeTestSub sub_data;
     SampleInfo info;
-    std::cout << "start test\n" << std::endl;
+    std::cout << "start test" << std::endl;
     while (true)
     {
         if (reader->read_next_sample(&pub_data, &info) == ReturnCode_t::RETCODE_OK)
